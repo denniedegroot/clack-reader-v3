@@ -50,3 +50,24 @@ text_sensor:
     update_interval: never
     lambda: |-
       return id(regeneration_last);
+    filters:   
+      - substitute:
+        - "Jan -> Jan"
+        - "Feb -> Fév"
+        - "Mar -> Mar"
+        - "Apr -> Avr"
+        - "May -> Mai"
+        - "Jun -> Jui"
+        - "Jul -> Jui"
+        - "Aug -> Aoû"
+        - "Sep -> Sep"
+        - "Okt -> Okt"
+        - "Nov -> Nov"
+        - "Dec -> Déc"
+        - "Mon -> Lun"
+        - "Tue -> Mar"
+        - "Wed -> Mer"
+        - "Thu -> Jeu"
+        - "Fri -> Ven"
+        - "Sat -> Sam"
+        - "Sun -> Dim" 
