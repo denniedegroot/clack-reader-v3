@@ -1,0 +1,52 @@
+#French Translation v0.2 (work 2 missing item)
+substitutions:
+  clack_select_chl_or_dpsw: Choix du mode
+  clack_distance: Distance Sel
+  clack_distance_tof: Distance Sel/Capteur TOF
+  clack_procent: Pourcentage de Sel
+  clack_animation: Hauteur Sel pour tableau de bord
+  clack_height: Hauteur Sel
+  clack_watermeter_total: Volume d'eau total
+  clack_m3_left: M3 d'eau adoucie restante
+  clack_l_left: Litres d'eau adoucie restante
+  clack_version: Version
+  clack_regeneration_last: Regéneré le
+  clack_fill_salt: Remplissage de Sel
+  clack_saltlevel_height_min: Hauteur Sel MIN
+  clack_saltlevel_height_max: Hauteur Sel MAX
+  clack_saltlevel_height_fill: Distance avant remplissage Sel
+  clack_capacity_liters: Capacité Restantate (LITRES)
+  clack_capacity_days: Capacité Restante (JOURS)
+  clack_chlorinator_delay: Temps d'activation du Chlorinateur
+  clack_watermeter_pulse: Impulsion du compteur d'eau
+  clack_regeneration_pulse: Impulsion regénération
+  clack_ip: Adresse IP adoucisseur
+  clack_wifi_signal_db: dB signal WiFi
+  clack_wifi_signal_db_percent: Signal WiFi
+  clack_uptime: Durée de fonctionnement
+  clack_chlorinator: Chlorinateur
+  clack_salt_level_measurement: Mesure du Sel
+#  clack_salt_measurent_in_brine_delay: Delay measure salt brine
+  hours: heures
+  days: jours
+  clack_yes: "oui"
+  clack_no: "non"
+  clack_on: "Allumé"
+  clack_off: "Eteint"
+  clack_power: Puissance
+  clack_current: Courant
+  clack_voltage: Tension
+  clack_shunt_voltage: Tension de dérivation
+  clack_restart: Redémarrer ESP
+  clack_regen: regénération clack
+  clack_brine: Pendant la saumure
+
+text_sensor:
+  # Expose last regeneration information as sensor / already in English
+  - platform: template
+    name: ${clack_regeneration_last}
+    id: clack_regeneration_last
+    icon: mdi:clock-start
+    update_interval: never
+    lambda: |-
+      return id(regeneration_last);

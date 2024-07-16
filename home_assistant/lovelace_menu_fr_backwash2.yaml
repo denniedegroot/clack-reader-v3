@@ -1,0 +1,277 @@
+#French Translation V0.1 (not working TBF)
+views:
+  - title: Water softener
+    path: watersoftener
+    cards:
+      - type: vertical-stack
+        cards:
+          - cards:
+              - type: entities
+                entities:
+                  - entity: sensor.clack_water_meter
+                    type: custom:multiple-entity-row
+                    icon: mdi:cup-water
+                    name: Adoucisseur d'eau
+                    secondary_info:
+                      entity: input_select.clack_water_softener_status
+                      name: 'phase: '
+                    state_header: used
+                    entities:
+                      - entity: sensor.time_to_regeneration
+                        name: temps restant
+                      - entity: sensor.clack_water_softener_m3_left
+                        name: m3 restant
+                style: |
+                  ha-card {
+                    border-radius: 20px
+                  }
+                  .card-header {
+                    font-size: 18px;
+                    padding: 5px 25px;
+                    font-weight: bold;
+                  }          
+                title: Water softener
+              - entities:
+                  - entity: sensor.clack_water_softener_ltr_left
+                    max: 3200
+                    min: 0
+                    name: L utilisé
+                height: 8px
+                decimal: false
+                positions:
+                  icon: 'off'
+                  indicator: 'off'
+                  tap_action: info
+                  name: 'off'
+                  value: 'off'
+                style: |
+                  ha-card {
+                    border-radius: 20px
+                  }
+                  .card-content {
+                   padding: 0px 10px 10px 10px;
+                   }      
+                type: custom:bar-card
+            mode: vertical
+            type: custom:stack-in-card
+          - type: conditional
+            conditions:
+              - entity: timer.timer_ws_total
+                state_not: idle
+            card:
+              type: entities
+              style: |
+
+                .card-content {
+                  padding: 8px;
+                }
+                .card-content > div {
+                  margin: 0 !important;
+                }  
+                .card-header {
+                  font-size: 18px;
+                  padding: 5px 25px;
+                  font-weight: bold;
+                }  
+                    .card-header {
+                      font-size: 18px;
+                      padding: 5px 25px;
+                      font-weight: bold;
+                    }     
+              title: Regen. started
+              entities:
+                - conditions:
+                    - entity: timer.timer_ws_backwash
+                      state_not: idle
+                  row:
+                    entity: timer.timer_ws_backwash
+                    icon: mdi:numeric-1-circle
+                    name: 'Phase: Backwash'
+                  type: conditional
+                - conditions:
+                    - entity: timer.timer_ws_brine
+                      state_not: idle
+                  row:
+                    entity: timer.timer_ws_brine
+                    icon: mdi:numeric-2-circle
+                    name: 'Phase: Brine'
+                  type: conditional
+                - conditions:
+                    - entity: timer.timer_ws_backwash2
+                      state_not: idle
+                  row:
+                    entity: timer.timer_ws_backwash2
+                    icon: mdi:numeric-3-circle
+                    name: 'Phase: Backwash2'
+                  type: conditional
+                - conditions:
+                    - entity: timer.timer_ws_rinse
+                      state_not: idle
+                  row:
+                    entity: timer.timer_ws_rinse
+                    icon: mdi:numeric-4-circle
+                    name: 'Phase: Rinse'
+                  type: conditional
+                - conditions:
+                    - entity: timer.timer_ws_fill
+                      state_not: idle
+                  row:
+                    entity: timer.timer_ws_fill
+                    icon: mdi:numeric-5-circle
+                    name: 'Phase: Fill'
+                  type: conditional
+                - type: section
+                - entity: timer.timer_ws_total
+                  icon: mdi:timer-sand
+                  name: Temps Restant Total (5 Phases)
+      - type: entities
+        entities:
+          - entity: sensor.clack_water_meter
+            name: Mesure d'eau
+          - entity: sensor.clack_water_softener_ltr_left
+            name: Litres d'eau adoucie restante
+          - entity: sensor.clack_water_softener_m3_left
+            name: M3 d'eau adoucie restante
+          - entity: sensor.clack_salt_level_distance_tof
+            name: Distance Sel/Capteur TOF
+          - entity: sensor.clack_salt_level_distance
+            name: Distance
+          - entity: sensor.clack_salt_level_height
+            name: Hauteur
+          - entity: sensor.clack_salt_level_percent
+            name: Pourcentage
+          - entity: sensor.clack_fill_salt
+            name: Remplissage de Sel
+          - entity: sensor.clack_regenerated_on
+            name: Regéneré le
+          - entity: binary_sensor.clack_watermeter_pulse
+            name: Impulsion du compteur d'eau
+          - entity: binary_sensor.clack_regeneration_pulse
+            name: Impulsion regénération
+          - entity: button.clack_test_button_use_pulse
+            name: Bouton de test UTILISATION
+          - entity: button.clack_test_button_regen_pulse
+            name: Bouton de test REGENERATION
+          - entity: sensor.clack_power
+            name: Puissance
+          - entity: sensor.clack_voltage
+            name: Tension
+          - entity: switch.clack_chlorinator
+            name: Chlorinateur / Dp-Sw relais
+          - entity: input_boolean.brine_almost_finished
+          - entity: input_boolean.clack_manual_regen
+      - elements:
+          - entity: sensor.clack_salt_level_for_dashboard
+            image: local/images/softener.png
+            state_image:
+              '0': local/images/softener0.png
+              '10': local/images/softener10.png
+              '20': local/images/softener20.png
+              '40': local/images/softener40.png
+              '60': local/images/softener60.png
+              '80': local/images/softener80.png
+              '100': local/images/softener100.png
+            style:
+              left: 0%
+              top: 0%
+              transform: scale(1,1)
+            tap_action:
+              action: none
+            type: image
+        image: local/images/softener.png
+        panel: true
+        type: picture-elements
+      - type: entities
+        entities:
+          - entity: sensor.clack_waterusage_this_quarter
+            name: Utilisation d'eau ( 1/4H )
+          - entity: sensor.clack_waterusage_this_hour
+            name: Utilisation d'eau ( 1h )
+          - entity: sensor.clack_waterusage_today
+            name: Utilisation d'eau aujourd'hui
+          - entity: sensor.clack_waterusage_this_month
+            name: Utilisation d'eau ce mois-ci
+          - entity: sensor.clack_waterusage_this_year
+            name: Utilisation d'eau cette année
+      - type: custom:apexcharts-card
+        graph_span: 7d
+        update_interval: 5m
+        cache: true
+        span:
+          end: day
+          offset: '-1sec'
+        header:
+          show: true
+          title: Water per day
+        apex_config:
+          xaxis:
+            labels:
+              format: dd-MM
+              show: true
+              showAlways: true
+          yaxis:
+            forceNiceScale: true
+            decimalsInFloat: 0
+            min: 0
+          chart:
+            type: area
+            height: 300
+          stroke:
+            show: true
+            width: 1
+          legend:
+            show: true
+          dataLabels:
+            enabled: false
+            distributed: true
+          fill:
+            type: gradient
+            gradient:
+              shadeIntensity: 0.1
+              opacityFrom: 0.25
+              opacityTo: 1
+              inverseColors: true
+              stops:
+                - 0
+                - 90
+                - 100
+        series:
+          - entity: sensor.clack_waterusage_today
+            name: Utilisation
+            type: column
+            float_precision: 2
+            group_by:
+              func: max
+              duration: 23h59m59s
+      - type: entities
+        entities:
+          - entity: select.clack_function_mode
+            name: Choix du mode
+          - entity: number.clack_chlorinator_active_time
+            name: Durée de fonctionnement du Chlorinateur
+          - entity: select.clack_salt_measurement
+            name: Mesure du Sel
+          - entity: input_number.brine_alert_time
+          - entity: number.clack_min_salt_distance
+            name: Hauteur Sel MIN
+          - entity: number.clack_max_salt_distance
+            name: Hauteur Sel MAX
+          - entity: number.clack_fill_salt_distance
+            name: Distance remplissage de Sel
+          - entity: number.clack_capacity_in_days
+            name: Capacité Restante (JOURS)
+          - entity: number.clack_capacity_in_liters
+            name: Capacité Restante (LITRES)
+          - entity: sensor.clack_version
+            name: Version
+          - entity: sensor.clack_water_softener_ip
+            name: Adresse IP
+          - entity: sensor.clack_wifi_signal
+            name: Signal WiFi
+          - entity: sensor.clack_wifi_signal_db
+            name: dB signal WiFi
+          - entity: light.clack_led
+            name: Led
+          - entity: sensor.clack_uptime
+            name: Durée de fonctionnement
+        title: Settings

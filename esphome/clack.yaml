@@ -13,7 +13,7 @@ substitutions:
 #  pulse_per_liters: "17"
 
 # In order to use other language fix clack-label filename below:
-# Currently supported languages are en (english), nl (dutch).
+# Currently supported languages are en (English), nl (Dutch), fr (French).
 # ESP32-wemos-s3 is a wemos lolin S3 mini
 packages:
   remote_package:
@@ -24,6 +24,7 @@ packages:
       esphome/.clack-base.yaml, 
       esphome/.clack-optional.yaml,
 #      esphome/.clack-labels-nl.yaml,
+#      esphome/.clack-labels-fr.yaml,
       esphome/.clack-labels-en.yaml,
       esphome/board-esp32-wemos-s3.yaml,
    ]
