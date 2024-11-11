@@ -6,11 +6,8 @@ esphome:
     priority: 200
     then:
       - script.execute: on_boot
-  includes:
-    - tof_vl53l1x.h  #ToF4M M5stack
   libraries:
     - "Wire"
-    - "pololu/VL53L1X"
 
 # OTA:
 ota:
@@ -160,46 +157,46 @@ script:
       - delay: !lambda "return id(duration) * 60 * 1000;"
       - switch.turn_off: chlorinator_relay
 
-  - id: set_preference_distance_readout
-    then:
-      - if:
-          condition:
-            lambda: |-
-              return strcmp(id(clack_salt_level_measurement).state.c_str(), "${clack_off}") == 0;
-          then:
-            - logger.log: "Measure Off"
-      - if:
-          condition:
-            lambda: |-
-              return strcmp(id(clack_salt_level_measurement).state.c_str(), "${clack_on}") == 0;
-          then:
-            - logger.log: "Measure On"
-            - sensor.template.publish:
-                id: clack_distance
-                state: !lambda |-
-                  return id(distance_cm).state;
-            - globals.set:
-                id: distance_cm_last_value
-                value: !lambda |-
-                  return id(distance_cm).state;
-      - if:
-          condition:
-            lambda: |-
-              return strcmp(id(clack_salt_level_measurement).state.c_str(), "${clack_brine}") == 0;
-          then:
-            - logger.log: "Measure On during brine"
-            - if:
-                condition:
-                  lambda: return id(brine_almost_finished);
-                then:
-                  - sensor.template.publish:
-                      id: clack_distance
-                      state: !lambda |-
-                        return id(distance_cm).state;
-                  - globals.set:
-                      id: distance_cm_last_value
-                      value: !lambda |-
-                        return id(distance_cm).state;
+  # - id: set_preference_distance_readout
+  #   then:
+  #     - if:
+  #         condition:
+  #           lambda: |-
+  #             return strcmp(id(clack_salt_level_measurement).state.c_str(), "${clack_off}") == 0;
+  #         then:
+  #           - logger.log: "Measure Off"
+  #     - if:
+  #         condition:
+  #           lambda: |-
+  #             return strcmp(id(clack_salt_level_measurement).state.c_str(), "${clack_on}") == 0;
+  #         then:
+  #           - logger.log: "Measure On"
+  #           - sensor.template.publish:
+  #               id: clack_distance
+  #               state: !lambda |-
+  #                 return id(distance_cm).state;
+  #           - globals.set:
+  #               id: distance_cm_last_value
+  #               value: !lambda |-
+  #                 return id(distance_cm).state;
+  #     - if:
+  #         condition:
+  #           lambda: |-
+  #             return strcmp(id(clack_salt_level_measurement).state.c_str(), "${clack_brine}") == 0;
+  #         then:
+  #           - logger.log: "Measure On during brine"
+  #           - if:
+  #               condition:
+  #                 lambda: return id(brine_almost_finished);
+  #               then:
+  #                 - sensor.template.publish:
+  #                     id: clack_distance
+  #                     state: !lambda |-
+  #                       return id(distance_cm).state;
+  #                 - globals.set:
+  #                     id: distance_cm_last_value
+  #                     value: !lambda |-
+  #                       return id(distance_cm).state;
 
 light:
 #G47=RGB WS2812C-2020
@@ -246,35 +243,35 @@ sensor:
     update_interval: 10s
 
 # VL53L1X TOF               
-  - platform: custom
-    lambda: |-
-      auto my_sensor = new MyCustomSensor();
-      App.register_component(my_sensor);
-      return {my_sensor};
+#   - platform: custom
+#     lambda: |-
+#       auto my_sensor = new MyCustomSensor();
+#       App.register_component(my_sensor);
+#       return {my_sensor};
 
-    sensors:
-      name: ${clack_distance_tof}
-      accuracy_decimals: 1
-      unit_of_measurement: "cm"
-      id: distance_cm
-      icon: mdi:ruler
-      internal: false
-      filters:
-        - lambda: |-
-            if (isnan(x)) {
-              return 0;
-            } else {
-              return x;
-            }
-        - lambda: return x/10;
-        - clamp:
-            min_value: 0.0
-            max_value: 400.0
-#        - median:
-        - delta: 0.2
-      on_value:
-        then:
-          - script.execute: set_preference_distance_readout
+#     sensors:
+#       name: ${clack_distance_tof}
+#       accuracy_decimals: 1
+#       unit_of_measurement: "cm"
+#       id: distance_cm
+#       icon: mdi:ruler
+#       internal: false
+#       filters:
+#         - lambda: |-
+#             if (isnan(x)) {
+#               return 0;
+#             } else {
+#               return x;
+#             }
+#         - lambda: return x/10;
+#         - clamp:
+#             min_value: 0.0
+#             max_value: 400.0
+# #        - median:
+#         - delta: 0.2
+#       on_value:
+#         then:
+#           - script.execute: set_preference_distance_readout
 
   ##
   # ultrasonic distance sensor.

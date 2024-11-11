@@ -17,7 +17,7 @@ substitutions:
 # ESP32-wemos-s3 is a wemos lolin S3 mini
 packages:
   remote_package:
-    url: https://github.com/fonske/clack-reader-v3
+    url: https://github.com/denniedegroot/clack-reader-v3
     ref: tof2
     refresh: 0s
     files: [ 
